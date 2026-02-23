@@ -1,14 +1,19 @@
 interface MatchButtonsProps {
   onLike: () => void;
   onPass: () => void;
+  isLiking?: boolean;
+  isPassing?: boolean;
 }
 
-export default function MatchButtons({ onLike, onPass }: MatchButtonsProps) {
+export default function MatchButtons({ onLike, onPass, isLiking = false, isPassing = false }: MatchButtonsProps) {
   return (
     <div className="flex items-center justify-center gap-8">
       <button
         onClick={onPass}
-        className="w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border-2 border-gray-300 dark:border-gray-600 hover:border-red-500 dark:hover:border-red-500"
+        disabled={isPassing || isLiking}
+        className={`w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border-2 border-gray-300 dark:border-gray-600 hover:border-red-500 dark:hover:border-red-500 ${
+          isPassing || isLiking ? "opacity-50 cursor-not-allowed hover:shadow-none" : ""
+        }`}
         aria-label="Pass"
       >
         <svg
@@ -26,7 +31,10 @@ export default function MatchButtons({ onLike, onPass }: MatchButtonsProps) {
 
       <button
         onClick={onLike}
-        className="w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border-2 border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500"
+        disabled={isLiking}
+        className={`w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border-2 border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500 ${
+          isLiking ? "opacity-50 cursor-not-allowed hover:shadow-none" : ""
+        }`}
         aria-label="Like"
       >
         <svg

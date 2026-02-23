@@ -27,6 +27,22 @@ export default function MatchesListPage() {
     loadMatches();
   }, []);
 
+  useEffect(() => {
+    function onNewMatch(e: Event) {
+      const detail = (e as CustomEvent<UserProfile>).detail;
+      if (!detail) return;
+      setMatches((prev) => {
+        const exists = prev.some((m) => m.id === detail.id);
+        if (exists) return prev;
+        return [detail, ...prev];
+      });
+    }
+    if (typeof window !== "undefined") {
+      window.addEventListener("new-match", onNewMatch as EventListener);
+      return () => window.removeEventListener("new-match", onNewMatch as EventListener);
+    }
+  }, []);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
