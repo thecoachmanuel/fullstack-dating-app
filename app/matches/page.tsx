@@ -19,6 +19,39 @@ export default function MatchesPage() {
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [heartBurst, setHeartBurst] = useState<boolean>(false);
   const [showMatchBanner, setShowMatchBanner] = useState<boolean>(false);
+  function confettiBurst() {
+    if (typeof document === "undefined") return;
+    const container = document.createElement("div");
+    container.style.position = "fixed";
+    container.style.inset = "0";
+    container.style.pointerEvents = "none";
+    container.style.zIndex = "9999";
+    document.body.appendChild(container);
+    const colors = ["#ec4899", "#ef4444", "#22c55e", "#3b82f6", "#a855f7"];
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 3;
+    for (let i = 0; i < 30; i++) {
+      const el = document.createElement("div");
+      el.style.position = "absolute";
+      el.style.width = "8px";
+      el.style.height = "8px";
+      el.style.borderRadius = "2px";
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.left = cx + "px";
+      el.style.top = cy + "px";
+      el.style.transition = "transform 700ms ease-out, opacity 700ms ease-out";
+      container.appendChild(el);
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 80 + Math.random() * 120;
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+      requestAnimationFrame(() => {
+        el.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random() * 360}deg)`;
+        el.style.opacity = "0";
+      });
+    }
+    setTimeout(() => document.body.removeChild(container), 800);
+  }
 
   const router = useRouter();
 
@@ -52,6 +85,7 @@ export default function MatchesPage() {
           setShowMatchNotification(true);
           setShowMatchBanner(true);
           setTimeout(() => setShowMatchBanner(false), 2000);
+          confettiBurst();
           if (typeof window !== "undefined" && result.matchedUser) {
             window.dispatchEvent(
               new CustomEvent("new-match", { detail: result.matchedUser })
@@ -164,6 +198,12 @@ export default function MatchesPage() {
             </div>
           </div>
         )}
+        <style jsx>{`
+          @keyframes slideFadeIn {
+            from { transform: translateY(8px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+          }
+        `}</style>
         <header className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <button

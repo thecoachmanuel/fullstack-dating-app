@@ -22,6 +22,7 @@ export default function EditProfilePage() {
     birthdate: "",
     avatar_url: "",
   });
+  const [matchSound, setMatchSound] = useState<boolean>(false);
 
   useEffect(() => {
     async function loadProfile() {
@@ -45,6 +46,10 @@ export default function EditProfilePage() {
     }
 
     loadProfile();
+    try {
+      const stored = typeof window !== "undefined" ? window.localStorage.getItem("matchSoundEnabled") : null;
+      setMatchSound(stored === "true");
+    } catch {}
   }, []);
 
   async function handleFormSubmit(e: React.FormEvent) {
@@ -140,6 +145,31 @@ export default function EditProfilePage() {
                     JPG, PNG or GIF. Max 5MB.
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Settings</h2>
+              <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                <div>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Match sound</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400">Play a subtle chime when you get a match</p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={matchSound}
+                  onClick={() => {
+                    setMatchSound((v) => {
+                      const nv = !v;
+                      try { window.localStorage.setItem("matchSoundEnabled", nv ? "true" : "false"); } catch {}
+                      return nv;
+                    });
+                  }}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${matchSound ? "bg-pink-500" : "bg-gray-400"}`}
+                >
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${matchSound ? "translate-x-6" : "translate-x-1"}`} />
+                </button>
               </div>
             </div>
 

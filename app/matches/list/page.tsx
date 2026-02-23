@@ -10,6 +10,7 @@ export default function MatchesListPage() {
   const [matches, setMatches] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [animateIds, setAnimateIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     async function loadMatches() {
@@ -36,6 +37,14 @@ export default function MatchesListPage() {
         if (exists) return prev;
         return [detail, ...prev];
       });
+      setAnimateIds((prev) => new Set(prev).add(detail.id));
+      setTimeout(() => {
+        setAnimateIds((prev) => {
+          const next = new Set(prev);
+          next.delete(detail.id);
+          return next;
+        });
+      }, 600);
     }
     if (typeof window !== "undefined") {
       window.addEventListener("new-match", onNewMatch as EventListener);
@@ -89,11 +98,13 @@ export default function MatchesListPage() {
         ) : (
           <div className="max-w-2xl mx-auto">
             <div className="grid gap-4">
-              {matches.map((match, key) => (
+              {matches.map((match) => (
                 <Link
-                  key={key}
+                  key={match.id}
                   href={`/chat/${match.id}`}
-                  className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+                  className={`bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 ${
+                    animateIds.has(match.id) ? "[animation:slideFadeIn_0.3s_ease-out]" : ""
+                  }`}
                 >
                   <div className="flex items-center space-x-4">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
@@ -125,6 +136,12 @@ export default function MatchesListPage() {
           </div>
         )}
       </div>
+      <style jsx>{`
+        @keyframes slideFadeIn {
+          from { transform: translateY(8px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }
