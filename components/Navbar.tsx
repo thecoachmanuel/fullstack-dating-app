@@ -2,6 +2,7 @@
 import { useAuth } from "@/contexts/auth-context";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Navbar() {
   const { signOut, user } = useAuth();
@@ -14,7 +15,7 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
   return (
-    <nav className="relative z-50 bg-slate-900 border-b border-gray-200/50 dark:border-gray-700/50">
+    <nav className="relative z-50 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center space-x-3">
@@ -53,6 +54,7 @@ export default function Navbar() {
           )}
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             {user && (
               <button
                 onClick={() => {
@@ -62,8 +64,8 @@ export default function Navbar() {
                   setOpen((v) => !v);
                 }}
                 aria-label="Open menu"
-                className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-700 text-gray-200 hover:bg-gray-800"
-             >
+                className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -120,29 +122,29 @@ export default function Navbar() {
             className={`md:hidden fixed inset-x-0 bottom-0 z-50 transform transition-transform duration-300 ease-out will-change-transform ${open ? "translate-y-0 scale-100" : "translate-y-full scale-95"}`}
           >
             <div
-              className="bg-slate-900 border-t border-gray-700 rounded-t-2xl shadow-2xl p-4"
+              className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 rounded-t-2xl shadow-2xl p-4 transition-colors duration-300"
               style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 16px)" }}
             >
-              <div className="mx-auto h-1 w-10 rounded-full bg-gray-600 mb-4" />
+              <div className="mx-auto h-1 w-10 rounded-full bg-gray-300 dark:bg-gray-600 mb-4" />
               <div className="space-y-1">
-                <Link href="/matches" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-200 hover:bg-gray-800">
-                  <svg className="w-5 h-5 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 015.964 12.06l3.243 3.243-1.414 1.414-3.243-3.243A7.5 7.5 0 1110.5 6z" /></svg>
+                <Link href="/matches" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <svg className="w-5 h-5 text-pink-500 dark:text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 015.964 12.06l3.243 3.243-1.414 1.414-3.243-3.243A7.5 7.5 0 1110.5 6z" /></svg>
                   <span>Discover</span>
                 </Link>
-                <Link href="/matches/list" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-200 hover:bg-gray-800">
-                  <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" /></svg>
+                <Link href="/matches/list" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <svg className="w-5 h-5 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" /></svg>
                   <span>Matches</span>
                 </Link>
-                <Link href="/chat" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-200 hover:bg-gray-800">
-                  <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M21 15a2 2 0 01-2 2H8l-4 4V5a2 2 0 012-2h13a2 2 0 012 2v10z" /></svg>
+                <Link href="/chat" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <svg className="w-5 h-5 text-green-500 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M21 15a2 2 0 01-2 2H8l-4 4V5a2 2 0 012-2h13a2 2 0 012 2v10z" /></svg>
                   <span>Messages</span>
                 </Link>
-                <Link href="/profile" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-200 hover:bg-gray-800">
-                  <svg className="w-5 h-5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M12 7a4 4 0 110-8 4 4 0 010 8z" transform="translate(0 9)" /></svg>
+                <Link href="/profile" onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <svg className="w-5 h-5 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M12 7a4 4 0 110-8 4 4 0 010 8z" transform="translate(0 9)" /></svg>
                   <span>Profile</span>
                 </Link>
-                <button onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); signOut(); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-red-300 hover:bg-gray-800">
-                  <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" /><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M7 4h6a2 2 0 012 2v3" /></svg>
+                <button onClick={() => { try { navigator?.vibrate?.(8); } catch {} setOpen(false); signOut(); }} className="flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-red-600 dark:text-red-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <svg className="w-5 h-5 text-red-500 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7" /><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M7 4h6a2 2 0 012 2v3" /></svg>
                   <span>Sign Out</span>
                 </button>
               </div>

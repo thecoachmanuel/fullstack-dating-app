@@ -68,7 +68,7 @@ export default function ChatConversationPage() {
             User not found
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            The user you're looking for doesn't exist or you don't have
+            The user you&apos;re looking for doesn&apos;t exist or you don&apos;t have
             permission to chat with them.
           </p>
           <button

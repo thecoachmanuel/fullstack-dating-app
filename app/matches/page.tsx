@@ -58,6 +58,7 @@ export default function MatchesPage() {
       if (typeof window === "undefined") return;
       const enabled = window.localStorage.getItem("matchSoundEnabled") === "true";
       if (!enabled) return;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       const o = ctx.createOscillator();
       const g = ctx.createGain();

@@ -33,7 +33,7 @@ export async function getPotentialMatches(): Promise<UserProfile[]> {
     throw new Error("Failed to get user preferences");
   }
 
-  const currentUserPrefs = userPrefs.preferences as any;
+  const currentUserPrefs = userPrefs.preferences as { gender_preference?: string[] };
   const genderPreference = currentUserPrefs?.gender_preference || [];
   const filteredMatches =
     potentialMatches

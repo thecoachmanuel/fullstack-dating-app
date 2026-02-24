@@ -19,6 +19,17 @@ export default function ChatPage() {
   const [animateIds, setAnimateIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    try {
+      const cached = typeof window !== "undefined" ? window.sessionStorage.getItem("recentChats") : null;
+      if (cached) {
+        const parsed = JSON.parse(cached) as ChatData[];
+        setChats(parsed);
+        setLoading(false);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
     async function loadMatches() {
       try {
         const userMatches = await getUserMatches();
@@ -30,6 +41,7 @@ export default function ChatPage() {
           unreadCount: 0,
         }));
         setChats(chatData);
+        try { window.sessionStorage.setItem("recentChats", JSON.stringify(chatData.slice(0, 10))); } catch {}
         console.log(userMatches);
       } catch (error) {
         console.error(error);
@@ -54,7 +66,9 @@ export default function ChatPage() {
           lastMessageTime: new Date().toISOString(),
           unreadCount: 0,
         };
-        return [newChat, ...prev];
+        const next = [newChat, ...prev].slice(0, 10);
+        try { window.sessionStorage.setItem("recentChats", JSON.stringify(next)); } catch {}
+        return next;
       });
       setAnimateIds((prev) => new Set(prev).add(detail.id));
       setTimeout(() => {
