@@ -58,7 +58,7 @@ export default function AuthPage() {
       <div className="max-w-md w-full space-y-8 p-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            StreamMatch
+            SwiftMatch
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             {isSignUp ? "Create Your Account" : "Sign in to your account"}

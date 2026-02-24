@@ -53,6 +53,27 @@ export default function MatchesPage() {
     setTimeout(() => document.body.removeChild(container), 800);
   }
 
+  function playMatchSound() {
+    try {
+      if (typeof window === "undefined") return;
+      const enabled = window.localStorage.getItem("matchSoundEnabled") === "true";
+      if (!enabled) return;
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(880, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.2);
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.05, ctx.currentTime + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
+      o.connect(g);
+      g.connect(ctx.destination);
+      o.start();
+      o.stop(ctx.currentTime + 0.45);
+    } catch {}
+  }
+
   const router = useRouter();
 
   useEffect(() => {
@@ -86,6 +107,7 @@ export default function MatchesPage() {
           setShowMatchBanner(true);
           setTimeout(() => setShowMatchBanner(false), 2000);
           confettiBurst();
+          playMatchSound();
           if (typeof window !== "undefined" && result.matchedUser) {
             window.dispatchEvent(
               new CustomEvent("new-match", { detail: result.matchedUser })
@@ -121,9 +143,18 @@ export default function MatchesPage() {
     }
   }
 
-  function handleCloseMatchNotification() {}
+  function handleCloseMatchNotification() {
+    setShowMatchNotification(false);
+    setMatchedUser(null);
+  }
 
-  function handleStartChat() {}
+  function handleStartChat() {
+    if (!matchedUser) return;
+    setShowMatchNotification(false);
+    const targetId = matchedUser.id;
+    setMatchedUser(null);
+    router.push(`/chat/${targetId}`);
+  }
 
   if (loading) {
     return (

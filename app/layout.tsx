@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StreamMatch - Find Your Perfect Match",
-  description:
-    "Connect with like-minded people through live streaming, meaningful conversations, and authentic connections on StreamMatch.",
+	title: "SwiftMatch - Find Your Perfect Match",
+	description:
+		"Connect with like-minded people through meaningful conversations and authentic connections on SwiftMatch.",
 };
 
 export default function RootLayout({

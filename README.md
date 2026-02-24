@@ -1,6 +1,6 @@
 ---
 
-# FullStack Dating Website with Next.js, Supabase & Stream
+# SwiftMatch – FullStack Modern Dating App with Next.js, Supabase & Stream
 
 <div align="center">
   <br />
@@ -16,7 +16,7 @@
     <img src="https://img.shields.io/badge/-TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
     <img src="https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   </div>
-  <h3 align="center">Build a FullStack Dating Website with Next.js, Supabase, Stream & TailwindCSS</h3>
+  <h3 align="center">Build SwiftMatch – a FullStack Dating App with Next.js, Supabase, Stream & TailwindCSS</h3>
   <div align="center">
     Follow the full video tutorial on 
     <a href="https://youtu.be/8QDT776XtO8" target="_blank"><b>YouTube</b></a>
@@ -39,7 +39,7 @@
 
 ## 🚀 Introduction
 
-In this in-depth tutorial you'll build a production-ready **FullStack Dating Website** using **Next.js**, **Supabase** (Postgres + Realtime), and **Stream** for chat & video. We cover everything from authentication and DB schema to matching logic, realtime chat, and one-to-one video calls — a complete, intermediate → advanced project.
+In this in-depth tutorial you'll build **SwiftMatch**, a production-ready fullstack dating app using **Next.js**, **Supabase** (Postgres + Realtime), and **Stream** for chat & video. We cover everything from authentication and DB schema to matching logic, realtime chat, and one-to-one video calls — a complete, intermediate → advanced project.
 
 🎥 Watch the full tutorial: [YouTube](https://youtu.be/8QDT776XtO8)
 
@@ -83,7 +83,7 @@ In this in-depth tutorial you'll build a production-ready **FullStack Dating Web
 
 ```sql
 -- =====================================================
--- StreamMatch Dating App - Complete Database Schema
+-- SwiftMatch Dating App - Complete Database Schema
 -- =====================================================
 
 -- Enable necessary extensions

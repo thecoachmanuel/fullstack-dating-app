@@ -13,10 +13,22 @@ export default function MatchesListPage() {
   const [animateIds, setAnimateIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    try {
+      const cached = typeof window !== "undefined" ? window.sessionStorage.getItem("recentMatches") : null;
+      if (cached) {
+        const parsed = JSON.parse(cached) as UserProfile[];
+        setMatches(parsed);
+        setLoading(false);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
     async function loadMatches() {
       try {
         const userMatches = await getUserMatches();
         setMatches(userMatches);
+        try { window.sessionStorage.setItem("recentMatches", JSON.stringify(userMatches.slice(0, 10))); } catch {}
         console.log(userMatches);
       } catch (error) {
         setError("Failed to load matches.");
@@ -35,7 +47,9 @@ export default function MatchesListPage() {
       setMatches((prev) => {
         const exists = prev.some((m) => m.id === detail.id);
         if (exists) return prev;
-        return [detail, ...prev];
+        const next = [detail, ...prev].slice(0, 10);
+        try { window.sessionStorage.setItem("recentMatches", JSON.stringify(next)); } catch {}
+        return next;
       });
       setAnimateIds((prev) => new Set(prev).add(detail.id));
       setTimeout(() => {

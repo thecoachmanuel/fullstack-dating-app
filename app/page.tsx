@@ -23,7 +23,7 @@ export default function Home() {
             <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6">
               Find Your Perfect
               <span className="block bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-                StreamMatch
+                SwiftMatch
               </span>
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
